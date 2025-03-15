@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en-us">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nine Men's Morris</title>
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: url('bg.jpg') no-repeat center center fixed;
+      background-size: cover;
+    }
+
+    canvas {
+      display: block;
+      border-radius: 25px;
+      opacity: 0.9;
+      width: 95vw;
+      height: auto;
+      max-width: 1295px;
+      max-height: 95%;
+      /*min-width: 500px;*/
+      /*min-height: 314px;*/
+      aspect-ratio: 1295 / 780;
+      /*952 * 520*/
+    }
+  </style>
+</head>
+
+<body>
+<canvas id="canvas" oncontextmenu="event.preventDefault()" tabindex=-1></canvas>
+
+<script type='text/javascript'>
+  var Module = {
+    canvas: (() => {
+      let canvas = document.getElementById('canvas');
+      if (!canvas) {
+        console.error('Canvas element not found!');
+        return;
+      }
+
+      canvas.addEventListener("webglcontextlost", (e) => {
+        alert('WebGL context lost. You will need to reload the page.');
+        e.preventDefault();
+      }, false);
+
+      function applyBorderWhenReady() {
+        if (canvas.clientWidth > 0 && canvas.clientHeight > 0) {
+          canvas.style.border = '6px solid black';
+        } else {
+          requestAnimationFrame(applyBorderWhenReady);
+        }
+      }
+
+      applyBorderWhenReady();
+      return canvas;
+    })()
+  };
+</script>
+
+<script type="text/javascript" src="nine-mens-morris.js"></script>
+</body>
+
+</html>
